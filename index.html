@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>CSB Builds — Building software, games, and financial tools</title>
-<meta name="description" content="CSB Builds creates software, financial tools, ERP systems, and games — turning ideas into products used in the real world." />
+<meta name="description" content="CSB Builds creates software, financial tools, and games — turning ideas into products used in the real world." />
 <style>
   /* ============ THEME TOKENS ============ */
   :root {
@@ -240,78 +240,106 @@
   .visual-game .px.on { background: linear-gradient(110deg,var(--accent),var(--accent-2)); box-shadow: 0 0 16px -2px var(--accent); }
   .visual-game .hero-icon { position: absolute; right: 18px; bottom: 14px; }
 
-  .visual-erp { background: linear-gradient(160deg, #0c0f18, #08090f); padding: 14px; }
-  [data-theme="light"] .visual-erp { background: linear-gradient(160deg,#eef1f7,#e6e9f2); }
-  .erp-bar { display: flex; justify-content: space-between; margin-bottom: 10px; }
-  .erp-bar .d { width: 8px; height: 8px; border-radius: 999px; background: var(--accent-3); }
-  .erp-rows { display: grid; gap: 7px; }
-  .erp-row { height: 13px; border-radius: 5px; background: rgba(255,255,255,0.07); overflow: hidden; position: relative; }
-  [data-theme="light"] .erp-row { background: rgba(10,12,24,0.08); }
-  .erp-row .fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg,var(--accent),var(--accent-2)); }
-  .erp-row.r2 .fill { background: linear-gradient(90deg,var(--accent-3),var(--accent)); }
-
-  .visual-fin { background: linear-gradient(160deg,#0b0d16,#08090f); padding: 14px; }
-  [data-theme="light"] .visual-fin { background: linear-gradient(160deg,#eef1f7,#e6e9f2); }
-  .fin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
-  .fin-tile { border: 1px solid var(--border); border-radius: 10px; padding: 10px; background: var(--surface); }
-  .fin-tile .k { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); }
-  .fin-tile .v { font-size: 16px; font-weight: 600; margin-top: 4px; }
-  .fin-tile .bar { height: 4px; border-radius: 999px; background: var(--surface-2); margin-top: 8px; overflow: hidden; }
-  .fin-tile .bar i { display: block; height: 100%; background: linear-gradient(90deg,var(--accent),var(--accent-2)); }
-
+  /* EXIT0---NULL thumbnail */
   .visual-exit {
+    position: relative;
     background:
-      radial-gradient(circle at 70% 25%, rgba(244,63,94,0.18), transparent 45%),
-      linear-gradient(165deg, #090b0c, #020303);
-    padding: 18px;
+      radial-gradient(ellipse at 50% 42%, rgba(115,125,145,.18), transparent 34%),
+      linear-gradient(180deg, #080a0d 0%, #11151a 42%, #050607 100%);
+    overflow: hidden;
+    isolation: isolate;
   }
-  [data-theme="light"] .visual-exit { background: linear-gradient(165deg,#e8e8e4,#cfd2cd); }
-  .exit-screen {
-    width: 100%; height: 100%; border: 1px solid rgba(134,239,172,0.25); border-radius: 12px;
-    padding: 18px; display: flex; flex-direction: column; justify-content: center;
-    background: repeating-linear-gradient(0deg, rgba(134,239,172,0.035) 0 1px, transparent 1px 4px), #050806;
-    box-shadow: inset 0 0 38px rgba(34,197,94,0.07); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  .visual-exit::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.75), transparent 22%, transparent 78%, rgba(0,0,0,.78)),
+      linear-gradient(180deg, rgba(255,255,255,.035), transparent 28%, rgba(0,0,0,.45));
+    z-index: 3; pointer-events: none;
   }
-  [data-theme="light"] .exit-screen { background: repeating-linear-gradient(0deg, rgba(20,83,45,0.04) 0 1px, transparent 1px 4px), #edf3ed; }
-  .exit-kicker { font-size: 9px; letter-spacing: 0.18em; color: #86efac; opacity: 0.72; }
-  [data-theme="light"] .exit-kicker { color: #166534; }
-  .exit-title { margin-top: 9px; font-size: clamp(1.45rem,4vw,2.15rem); line-height: 1; letter-spacing: 0.04em; color: #dcfce7; text-shadow: 0 0 14px rgba(134,239,172,0.24); }
-  [data-theme="light"] .exit-title { color: #14532d; text-shadow: none; }
-  .exit-status { margin-top: 14px; font-size: 9px; letter-spacing: 0.12em; color: #fb7185; }
+  .visual-exit::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 4px);
+    opacity: .45; mix-blend-mode: screen; z-index: 6; pointer-events: none;
+  }
+  .exit-hall {
+    position: absolute; inset: 0; overflow: hidden;
+    perspective: 420px;
+  }
+  .exit-ceiling {
+    position: absolute; left: 16%; right: 16%; top: 7%; height: 34%;
+    background: linear-gradient(165deg, #1b2026, #0b0d10 65%);
+    clip-path: polygon(18% 0,82% 0,100% 100%,0 100%);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .exit-floor {
+    position: absolute; left: 7%; right: 7%; bottom: -2%; height: 61%;
+    background: linear-gradient(175deg, #171b20 0%, #090b0d 72%);
+    clip-path: polygon(30% 0,70% 0,100% 100%,0 100%);
+    box-shadow: inset 0 20px 30px rgba(0,0,0,.3);
+  }
+  .exit-wall-left,.exit-wall-right {
+    position: absolute; top: 15%; bottom: 3%; width: 32%;
+    background: linear-gradient(90deg,#050607,#15191d);
+  }
+  .exit-wall-left { left: -2%; clip-path: polygon(0 0,100% 17%,100% 78%,0 100%); }
+  .exit-wall-right { right: -2%; clip-path: polygon(0 17%,100% 0,100% 100%,0 78%); background: linear-gradient(270deg,#050607,#15191d); }
+  .exit-door {
+    position: absolute; z-index: 2; left: 39%; top: 30%; width: 22%; height: 49%;
+    background: linear-gradient(90deg,#07090b,#20252b 48%,#07090b);
+    border: 2px solid #30363d;
+    box-shadow: 0 0 35px rgba(0,0,0,.9), inset 0 0 18px rgba(0,0,0,.75);
+  }
+  .exit-door::before {
+    content: ""; position: absolute; left: 10%; right: 10%; top: 10%; height: 36%;
+    border: 1px solid #343a42; background: rgba(0,0,0,.28);
+  }
+  .exit-door::after {
+    content: ""; position: absolute; right: 11%; top: 54%; width: 7px; height: 7px;
+    border-radius: 50%; background: #aeb7bf; box-shadow: 0 0 7px rgba(190,200,210,.5);
+  }
+  .exit-light {
+    position: absolute; z-index: 4; left: 43%; top: 17%; width: 14%; height: 5px;
+    background: #cfd8df; border-radius: 3px;
+    box-shadow: 0 0 12px 4px rgba(210,220,230,.22);
+  }
+  .exit-light.l2 { left: 25%; top: 29%; width: 9%; opacity: .32; transform: rotate(-2deg); }
+  .exit-light.l3 { left: 66%; top: 29%; width: 9%; opacity: .22; transform: rotate(2deg); }
+  .exit-sign {
+    position: absolute; z-index: 5; left: 43%; top: 25%;
+    padding: 3px 8px; border: 1px solid #651d24; background: #4b1117;
+    color: #ff5b67; font: 700 8px/1 Arial,sans-serif; letter-spacing: .16em;
+    box-shadow: 0 0 12px rgba(180,30,45,.28);
+  }
+  .exit-titleplate {
+    position: absolute; z-index: 7; left: 20px; bottom: 15px;
+    color: #f1f3f5; font: 800 18px/1 Arial,sans-serif; letter-spacing: .08em;
+    text-shadow: 0 2px 8px #000;
+  }
+  .exit-subplate {
+    position: absolute; z-index: 7; left: 21px; bottom: 7px;
+    color: #aeb5bd; font: 600 7px/1 Arial,sans-serif; letter-spacing: .18em;
+  }
 
-  /* CLAIMED — a lost-property tag hanging in a fluorescent-lit back room */
-  .visual-claimed {
-    background:
-      radial-gradient(circle at 50% 0%, rgba(234,230,208,0.16), transparent 55%),
-      linear-gradient(168deg, #14161a, #090a0c);
-    padding: 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  .visual-fin {
+    background: linear-gradient(160deg, #17191d, #0d0f12);
+    padding: 14px;
+    filter: grayscale(1);
+    opacity: 0.58;
   }
-  [data-theme="light"] .visual-claimed { background: radial-gradient(circle at 50% 0%, rgba(160,150,110,0.20), transparent 55%), linear-gradient(168deg,#e9e7de,#d5d3c8); }
-  .claimed-shelf {
-    position: absolute; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.10);
+  [data-theme="light"] .visual-fin { background: linear-gradient(160deg,#e1e3e6,#d4d6da); }
+  .wealth-upcoming { opacity: 0.68; }
+  .wealth-upcoming .card-visual { filter: grayscale(1); opacity: 0.55; }
+  .wealth-upcoming .card-badge { color: var(--text-faint); }
+  .wealth-upcoming .btn-upcoming {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-faint);
+    cursor: default;
+    pointer-events: none;
   }
-  [data-theme="light"] .claimed-shelf { background: rgba(10,12,24,0.12); }
-  .claimed-shelf.s1 { top: 34%; }
-  .claimed-shelf.s2 { top: 66%; }
-  .claimed-tag {
-    position: relative; width: 78%; max-width: 220px; padding: 14px 16px 16px; border-radius: 3px;
-    background: linear-gradient(170deg, #e8e3d2, #cfcab6); color: #23211c;
-    box-shadow: 0 18px 34px -18px rgba(0,0,0,0.9); transform: rotate(-1.6deg);
-  }
-  .claimed-tag::before {
-    content: ""; position: absolute; top: 9px; left: 50%; width: 11px; height: 11px; margin-left: -5.5px;
-    border-radius: 999px; background: #14161a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
-  }
-  [data-theme="light"] .claimed-tag::before { background: #d5d3c8; box-shadow: inset 0 0 0 1px rgba(10,12,24,0.25); }
-  .claimed-tag .tag-no { margin-top: 16px; font-size: 8.5px; letter-spacing: 0.22em; color: #6a655a; }
-  .claimed-tag .tag-title { margin-top: 6px; font-size: clamp(1.2rem,3.4vw,1.6rem); line-height: 1; letter-spacing: 0.14em; font-weight: 700; }
-  .claimed-tag .tag-sub { margin-top: 6px; font-size: 8px; letter-spacing: 0.16em; color: #57534a; }
-  .claimed-tag .tag-rule { margin: 10px 0 8px; height: 1px; background: rgba(35,33,28,0.22); }
-  .claimed-tag .tag-row { display: flex; justify-content: space-between; font-size: 8px; letter-spacing: 0.1em; color: #45423a; }
-  .claimed-stamp {
-    position: absolute; right: 12px; bottom: 10px; font-size: 8px; letter-spacing: 0.2em;
-    color: #b0473a; border: 1px solid rgba(176,71,58,0.55); padding: 3px 7px; border-radius: 2px; transform: rotate(-7deg);
-  }
+
 
   /* ============ RAGE GAME SECTION ============ */
   .game-section { overflow: hidden; }
@@ -363,52 +391,6 @@
     font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
   }
 
-  /* ============ CLAIMED FEATURE STRIP ============ */
-  .claimed-wrap {
-    margin-top: 56px; border-radius: 28px; border: 1px solid var(--border); overflow: hidden;
-    background: linear-gradient(160deg, var(--bg-2), var(--bg));
-    display: grid; grid-template-columns: 1fr;
-  }
-  @media (min-width: 861px) { .claimed-wrap { grid-template-columns: 0.95fr 1.05fr; } }
-  .claimed-preview {
-    position: relative; min-height: 340px; padding: 26px; display: flex; flex-direction: column; justify-content: space-between;
-    background:
-      radial-gradient(circle at 30% 12%, rgba(226,222,200,0.14), transparent 55%),
-      linear-gradient(172deg, #101216, #05060a);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  }
-  [data-theme="light"] .claimed-preview { background: radial-gradient(circle at 30% 12%, rgba(160,150,110,0.20), transparent 55%), linear-gradient(172deg,#e9e7de,#d8d6cb); }
-  .counter-head { display: flex; justify-content: space-between; align-items: center; font-size: 10px; letter-spacing: 0.18em; color: var(--text-faint); }
-  .counter-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 20px 0; }
-  .counter-who { font-size: 13px; letter-spacing: 0.06em; color: var(--text); }
-  .counter-desc { margin-top: 6px; font-size: 11px; color: var(--text-faint); max-width: 34ch; line-height: 1.7; }
-  .counter-line { margin-top: 20px; font-size: 13.5px; line-height: 1.75; color: var(--text-dim); max-width: 40ch; }
-  .counter-line b { color: var(--text); font-weight: 500; }
-  .counter-choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 22px; }
-  .choice {
-    text-align: center; padding: 10px 6px; border-radius: 8px; font-size: 10.5px; letter-spacing: 0.14em;
-    border: 1px solid var(--border); background: var(--surface); color: var(--text-dim);
-  }
-  .choice.ret { border-left: 2px solid #6f9a5e; }
-  .choice.ref { border-left: 2px solid #b0473a; }
-  .choice.hold { border-left: 2px solid #d1a34a; }
-  .patience { margin-top: 16px; height: 3px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
-  .patience i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg,#6f9a5e,#d1a34a 62%,#b0473a); animation: patienceDrain 7s linear infinite; }
-  @keyframes patienceDrain { 0% { width: 100%; } 100% { width: 8%; } }
-
-  .claimed-info { padding: 36px; display: flex; flex-direction: column; justify-content: center; }
-  @media (max-width: 860px) { .claimed-info { padding: 28px 22px; } }
-  .claimed-stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; margin: 26px 0; }
-  .claimed-stats .stat .v { font-size: 2rem; }
-  .claimed-stats .stat .l { font-size: 11px; }
-  .claimed-badge {
-    display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px;
-    background: rgba(209,163,74,0.10); border: 1px solid rgba(209,163,74,0.42); color: #d1a34a;
-    font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
-  }
-  .no-list { list-style: none; margin-top: 20px; display: grid; gap: 9px; }
-  .no-list li { font-size: 13.5px; color: var(--text-dim); display: flex; gap: 10px; align-items: flex-start; }
-  .no-list li svg { flex: 0 0 auto; margin-top: 3px; color: var(--accent-3); }
 
   /* ============ ECOSYSTEM ============ */
   .eco { margin-top: 56px; position: relative; }
@@ -546,7 +528,7 @@
   <div class="container hero-content">
     <span class="pill reveal"><span class="dot"></span> Technology Studio</span>
     <h1 class="h1 reveal">We Build Things People <span class="grad-text">Actually Want to Use.</span></h1>
-    <p class="lead reveal">CSB Builds creates software, financial tools, ERP systems, and games — turning ideas into products used in the real world.</p>
+    <p class="lead reveal">CSB Builds creates software, financial tools, and games — turning ideas into products used in the real world.</p>
     <div class="hero-ctas reveal">
       <a href="#products" class="btn btn-light">Explore Our Work
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -557,7 +539,7 @@
       </a>
     </div>
     <div class="stats-panel reveal">
-      <div class="stat"><div class="v">6+</div><div class="l">Products &amp; Games</div></div>
+      <div class="stat"><div class="v">3</div><div class="l">Products &amp; Games</div></div>
       <div class="stat"><div class="v">100</div><div class="l">Platformer Levels</div></div>
       <div class="stat"><div class="v">Multiple</div><div class="l">Product Categories</div></div>
       <div class="stat"><div class="v">1 Mission</div><div class="l">Build Better Products</div></div>
@@ -596,17 +578,26 @@
         </div>
       </article>
 
-      <!-- EXIT//NULL / Escape the Hospital -->
-      <article class="card reveal" data-tilt>
-        <div class="card-visual visual-exit">
-          <div class="exit-screen">
-            <div class="exit-kicker">ST. MARLOWE HOSPITAL // ROOM 214</div>
-            <div class="exit-title">EXIT//NULL</div>
-            <div class="exit-status">SYSTEM LOCKDOWN · FIND A WAY OUT</div>
+
+      <!-- EXIT0---NULL / Escape the Hospital -->
+      <article class="card reveal" data-tilt data-search="exit0 null exit hospital escape first person horror">
+        <div class="card-visual visual-exit" aria-label="EXIT0---NULL abandoned hospital thumbnail">
+          <div class="exit-hall">
+            <div class="exit-ceiling"></div>
+            <div class="exit-wall-left"></div>
+            <div class="exit-wall-right"></div>
+            <div class="exit-floor"></div>
+            <div class="exit-light"></div>
+            <div class="exit-light l2"></div>
+            <div class="exit-light l3"></div>
+            <div class="exit-door"></div>
+            <div class="exit-sign">EXIT</div>
+            <div class="exit-titleplate">EXIT0---NULL</div>
+            <div class="exit-subplate">ST. MARLOWE HOSPITAL // ROOM 214</div>
           </div>
         </div>
         <span class="card-badge">Windows / First-Person Escape</span>
-        <h3>EXIT//NULL</h3>
+        <h3>EXIT0---NULL</h3>
         <p>A PS1-style first-person escape game set in an abandoned hospital. Restore critical systems, investigate contradictory records, and find a way out through one of four endings — with no combat, monsters, gore, or jumpscares.</p>
         <div class="chips">
           <span class="chip">Exploration</span>
@@ -620,68 +611,8 @@
         </div>
       </article>
 
-      <!-- CLAIMED — Lost Property: Night Shift -->
-      <article class="card reveal" data-tilt id="claimed">
-        <div class="card-visual visual-claimed">
-          <span class="claimed-shelf s1"></span>
-          <span class="claimed-shelf s2"></span>
-          <div class="claimed-tag">
-            <div class="tag-no">LP-2211 · PLATFORM 3</div>
-            <div class="tag-title">CLAIMED</div>
-            <div class="tag-sub">LOST PROPERTY — NIGHT SHIFT</div>
-            <div class="tag-rule"></div>
-            <div class="tag-row"><span>HELD 14 DAYS</span><span>SHELF 9</span></div>
-          </div>
-          <span class="claimed-stamp">UNCLAIMED</span>
-        </div>
-        <span class="card-badge">Windows / Narrative</span>
-        <h3>CLAIMED — Lost Property: Night Shift</h3>
-        <p>You are the lone night clerk in a railway station's Lost Property Office. People describe what they've lost; you question them, search the storage room, and decide whether to return, refuse, or hold. The real question is whether you believe them — and nobody is lying about everything.</p>
-        <div class="chips">
-          <span class="chip">Four Nights</span>
-          <span class="chip">23 Cases</span>
-          <span class="chip">Six Endings</span>
-          <span class="chip">Delayed Consequences</span>
-          <span class="chip">PS1-Style</span>
-          <span class="chip">Offline</span>
-          <span class="chip">Portable Windows App</span>
-        </div>
-        <div class="card-actions">
-          <a href="https://github.com/aakk3/CSB-Builds/releases/download/v1.1/CLAIMED-Lost-Property-Night-Shift.zip" class="btn btn-primary btn-sm">Download for Windows ↓</a>
-          <a href="#claimed-feature" class="btn btn-ghost btn-sm">See More</a>
-        </div>
-        <p class="card-note">Portable · 69 MB · no installer, no internet, no admin rights</p>
-      </article>
-
-      <!-- Kitchen Batch Buddy ERP -->
-      <article class="card reveal" data-tilt>
-        <div class="card-visual visual-erp">
-          <div class="erp-bar"><span class="d"></span><span class="d"></span><span class="d"></span></div>
-          <div class="erp-rows">
-            <div class="erp-row"><div class="fill" style="width:78%"></div></div>
-            <div class="erp-row r2"><div class="fill" style="width:54%"></div></div>
-            <div class="erp-row"><div class="fill" style="width:90%"></div></div>
-            <div class="erp-row r2"><div class="fill" style="width:42%"></div></div>
-            <div class="erp-row"><div class="fill" style="width:66%"></div></div>
-          </div>
-        </div>
-        <span class="card-badge">ERP / Operations</span>
-        <h3>Kitchen Batch Buddy</h3>
-        <p>An ERP-style operations platform designed to simplify kitchen production, batch tracking, inventory workflows, and day-to-day operational management.</p>
-        <div class="chips">
-          <span class="chip">Batch Management</span>
-          <span class="chip">Inventory</span>
-          <span class="chip">Operations</span>
-          <span class="chip">Production Tracking</span>
-          <span class="chip">Dashboard</span>
-        </div>
-        <div class="card-actions">
-          <a href="https://kitchen-batch-buddy.lovable.app/" target="_blank" rel="noreferrer" class="btn btn-primary btn-sm">Launch ERP →</a>
-        </div>
-      </article>
-
       <!-- WealthOS -->
-      <article class="card reveal" data-tilt>
+      <article class="card reveal wealth-upcoming" data-tilt>
         <div class="card-visual visual-fin">
           <div class="fin-grid">
             <div class="fin-tile"><div class="k">Monthly Spending</div><div class="v">$2,840</div><div class="bar"><i style="width:62%"></i></div></div>
@@ -690,9 +621,9 @@
             <div class="fin-tile"><div class="k">Budget</div><div class="v">On Track</div><div class="bar"><i style="width:88%"></i></div></div>
           </div>
         </div>
-        <span class="card-badge">Financial Operating System</span>
+        <span class="card-badge">Upcoming</span>
         <h3>WealthOS</h3>
-        <p>A modern budgeting and wealth-management application designed to help users understand where their money goes, manage budgets, monitor financial goals, and build long-term wealth.</p>
+        <p>A modern budgeting and wealth-management application in development, focused on helping users understand their money, manage budgets, monitor financial goals, and build long-term wealth.</p>
         <div class="chips">
           <span class="chip">Monthly Spending</span>
           <span class="chip">Savings Rate</span>
@@ -701,7 +632,7 @@
           <span class="chip">Financial Goals</span>
         </div>
         <div class="card-actions">
-          <a href="#products" class="btn btn-primary btn-sm">Explore WealthOS</a>
+          <span class="btn btn-upcoming btn-sm">Coming Soon</span>
         </div>
       </article>
     </div>
@@ -758,76 +689,6 @@
   </div>
 </section>
 
-<!-- ============ CLAIMED FEATURE ============ -->
-<section class="section-pad" id="claimed-feature">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">New Release</div>
-      <h2 class="h2">Do You Believe This Person?</h2>
-      <p>CLAIMED is a quiet, four-night narrative game about judgement. You run the Lost Property Office on the night shift, and every decision is one you have to live with.</p>
-    </div>
-
-    <div class="claimed-wrap reveal">
-      <div class="claimed-preview">
-        <div class="counter-head">
-          <span>LOST PROPERTY — CENTRAL STATION</span>
-          <span>01:47</span>
-        </div>
-        <div class="counter-body">
-          <div class="counter-who">Ines Petran</div>
-          <div class="counter-desc">Woman, twenties. Uniform tunic under a coat. Has been awake a long time.</div>
-          <div class="counter-line">
-            "Blue backpack? Strap's frayed? Please say it's here."
-            <br><br>
-            <b>The tag says Platform 7, Wednesday.</b> She said Platform 3, Tuesday. There is another name written inside the textbook.
-          </div>
-          <div class="counter-choices">
-            <div class="choice ret">RETURN</div>
-            <div class="choice ref">REFUSE</div>
-            <div class="choice hold">HOLD</div>
-          </div>
-          <div class="patience"><i></i></div>
-        </div>
-      </div>
-
-      <div class="claimed-info">
-        <span class="claimed-badge">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 8.5 12.4 2.3a1 1 0 0 0-1.2 0L3 8.5V21h17.6V8.5z"/><circle cx="11.8" cy="12" r="2.2"/></svg>
-          Windows · Portable
-        </span>
-        <h3 class="h3" style="margin-top:16px">CLAIMED — Lost Property: Night Shift</h3>
-        <p class="muted" style="margin-top:12px">Honest owners forget which platform they were on. Fraudsters know the middle name of the child in the photograph. Some cases have no right answer, and the game never tells you which ones those were — until the end-of-shift report, under the heading <b>WHAT YOU DIDN'T KNOW</b>.</p>
-
-        <ul class="no-list">
-          <li>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-            Decisions on Night 1 come back to find you on Night 4.
-          </li>
-          <li>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-            Open someone's bag and you learn a lot. It is counted, and some people can tell.
-          </li>
-          <li>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-            No combat, no monsters, no jumpscares. The tension is entirely human.
-          </li>
-        </ul>
-
-        <div class="claimed-stats">
-          <div class="stat"><div class="v" data-count="4">0</div><div class="l">Nights</div></div>
-          <div class="stat"><div class="v" data-count="23">0</div><div class="l">Cases</div></div>
-          <div class="stat"><div class="v" data-count="6">0</div><div class="l">Endings</div></div>
-          <div class="stat"><div class="v">3</div><div class="l">Ways to Decide</div></div>
-        </div>
-
-        <div class="card-actions" style="margin-top:0">
-          <a href="https://github.com/aakk3/CSB-Builds/releases/download/v1.1/CLAIMED-Lost-Property-Night-Shift.zip" class="btn btn-primary">Download for Windows ↓</a>
-        </div>
-        <p class="card-note">Portable · 69 MB · unzip and run · saves after every case</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ============ ECOSYSTEM ============ -->
 <section class="section-pad" id="ecosystem">
@@ -845,23 +706,9 @@
           <ul>
             <li>Rage Bait Sketch</li>
             <li>CSB Builds Game</li>
-            <li>EXIT//NULL — Escape the Hospital</li>
-            <li>CLAIMED — Lost Property: Night Shift</li>
-          </ul>
+</ul>
         </div>
-        <div class="eco-node reveal">
-          <div class="branch">Business Software</div>
-          <ul>
-            <li>Kitchen Batch Buddy ERP</li>
-          </ul>
-        </div>
-        <div class="eco-node reveal">
-          <div class="branch">Finance</div>
-          <ul>
-            <li>WealthOS</li>
-          </ul>
-        </div>
-      </div>
+
     </div>
   </div>
 </section>
@@ -872,7 +719,7 @@
     <div class="section-head reveal">
       <div class="eyebrow">About</div>
       <h2 class="h2">From Ideas to Products.</h2>
-      <p>CSB Builds is a technology company focused on creating useful digital products across software, finance, operations, and gaming. We experiment quickly, build real products, and improve them through iteration.</p>
+      <p>CSB Builds is a technology company focused on creating useful digital products across software, finance, and gaming. We experiment quickly, build real products, and improve them through iteration.</p>
     </div>
 
     <div class="principles">
@@ -904,7 +751,7 @@
     </div>
     <div class="metrics-grid">
       <div class="metric reveal"><div class="v" data-count="100">0</div><div class="l">Platformer Levels</div></div>
-      <div class="metric reveal"><div class="v" data-count="6" data-suffix="+">0</div><div class="l">Products &amp; Games</div></div>
+      <div class="metric reveal"><div class="v" data-count="3">0</div><div class="l">Products &amp; Games</div></div>
       <div class="metric reveal"><div class="v" data-count="3" data-suffix="+">0</div><div class="l">Product Categories</div></div>
       <div class="metric reveal"><div class="v">Always</div><div class="l">Building</div></div>
     </div>
@@ -921,11 +768,8 @@
     <div class="timeline">
       <div class="tl-item reveal"><div class="step">01 — Started Building</div><h3>The first experiments</h3><p>The first experiments and software projects.</p></div>
       <div class="tl-item reveal"><div class="step">02 — Games</div><h3>Interactive browser games</h3><p>Development of interactive browser games.</p></div>
-      <div class="tl-item reveal"><div class="step">03 — Business Software</div><h3>Operational tools</h3><p>Launch of operational tools such as Kitchen Batch Buddy.</p></div>
       <div class="tl-item reveal"><div class="step">04 — WealthOS</div><h3>Personal-finance software</h3><p>Expansion into personal-finance software.</p></div>
-      <div class="tl-item reveal"><div class="step">05 — EXIT//NULL</div><h3>Desktop game release</h3><p>A PS1-style first-person hospital escape game built as a portable Windows experience.</p></div>
-      <div class="tl-item reveal"><div class="step">06 — CLAIMED</div><h3>Narrative desktop release</h3><p>A four-night game about judgement, set behind the counter of a railway station's Lost Property Office.</p></div>
-      <div class="tl-item reveal"><div class="step">07 — What's Next</div><h3>Ambitious ideas ahead</h3><p>More products, experiments, and ambitious ideas.</p></div>
+<div class="tl-item reveal"><div class="step">07 — What's Next</div><h3>Ambitious ideas ahead</h3><p>More products, experiments, and ambitious ideas.</p></div>
     </div>
   </div>
 </section>
@@ -965,11 +809,8 @@
       <div class="footer-col">
         <h4>Projects</h4>
         <a href="#products">WealthOS</a>
-        <a href="https://kitchen-batch-buddy.lovable.app/" target="_blank" rel="noreferrer">Kitchen Batch Buddy</a>
         <a href="https://aakk3.github.io/RageBaitSketch/" target="_blank" rel="noreferrer">Rage Bait Sketch</a>
-        <a href="https://github.com/aakk3/CSB-Builds/releases/download/v1.0/Escape.the.Hospital.zip">EXIT//NULL — Windows Download</a>
-        <a href="https://github.com/aakk3/CSB-Builds/releases/download/v1.1/CLAIMED-Lost-Property-Night-Shift.zip">CLAIMED — Windows Download</a>
-      </div>
+</div>
     </div>
     <div class="footer-bottom">
       <span>© 2026 CSB Builds. Built by people who build.</span>
@@ -1041,6 +882,38 @@
     });
   }, { threshold: 0.4 });
   document.querySelectorAll("[data-count]").forEach(function (el) { cio.observe(el); });
+
+  /* ---------- PROJECT SEARCH ---------- */
+  var projectSearch = document.getElementById("projectSearch");
+  var clearProjectSearch = document.getElementById("clearProjectSearch");
+  var searchResults = document.getElementById("searchResults");
+  var projectCards = Array.prototype.slice.call(document.querySelectorAll("#products .cards .card"));
+
+  function filterProjects() {
+    var query = projectSearch.value.trim().toLowerCase();
+    var visible = 0;
+    projectCards.forEach(function (card) {
+      var haystack = (card.getAttribute("data-search") || card.textContent).toLowerCase();
+      var match = !query || haystack.indexOf(query) !== -1;
+      card.classList.toggle("search-hidden", !match);
+      if (match) visible++;
+    });
+    clearProjectSearch.classList.toggle("show", !!query);
+    if (!query) {
+      searchResults.textContent = "";
+    } else {
+      searchResults.textContent = visible + " project" + (visible === 1 ? "" : "s") + " found";
+    }
+  }
+
+  if (projectSearch) {
+    projectSearch.addEventListener("input", filterProjects);
+    clearProjectSearch.addEventListener("click", function () {
+      projectSearch.value = "";
+      projectSearch.focus();
+      filterProjects();
+    });
+  }
 
   /* ---------- CARD TILT + SPOTLIGHT ---------- */
   if (!reduce && finePointer) {
